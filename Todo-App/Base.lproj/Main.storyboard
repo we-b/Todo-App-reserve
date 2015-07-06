@@ -116,8 +116,9 @@
                     <navigationItem key="navigationItem" title="新規Todo作成" id="X16-uk-sdd"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="descriptionView" destination="gSx-r6-IbM" id="VDW-CD-uUy"/>
-                        <outlet property="todoField" destination="cwT-wY-pHc" id="2Nm-yd-pxh"/>
+                        <outlet property="descriptionView" destination="gSx-r6-IbM" id="rzS-ha-LZI"/>
+                        <outlet property="prioritySegment" destination="DH9-gy-7jM" id="KcD-DZ-3tK"/>
+                        <outlet property="todoField" destination="cwT-wY-pHc" id="7Pl-9y-OtX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q4Y-7W-6II" userLabel="First Responder" sceneMemberID="firstResponder"/>
