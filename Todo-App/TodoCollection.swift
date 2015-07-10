@@ -14,10 +14,10 @@ class TodoCollection: NSObject {
     
     func addTodoCollection(todo: Todo){
         self.todos.append(todo)
-        TodoCollection.save(todos)
+        self.save()
     }
     
-    class func save(todos: Array<Todo>) {
+    func save (){
         var todoLists: Array<Dictionary<String, AnyObject>> = []
         for todo in todos {
             var todoDic = TodoCollection.convertDictionary(todo)

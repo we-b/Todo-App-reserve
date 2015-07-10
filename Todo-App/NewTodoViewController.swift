@@ -12,7 +12,6 @@ class NewTodoViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var prioritySegment: UISegmentedControl!
     @IBOutlet weak var descriptionView: UITextView!
     @IBOutlet weak var todoField: UITextField!
-    var todo:Todo!
     var todoColleciton = TodoCollection.sharedInstance
     
     override func viewDidLoad() {
@@ -23,7 +22,6 @@ class NewTodoViewController: UIViewController, UITextFieldDelegate {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: "tapGesture:")
         self.view.addGestureRecognizer(tapRecognizer)
         todoField.delegate = self
-        todo = Todo()
         // Do any additional setup after loading the view.
     }
     
@@ -49,6 +47,7 @@ class NewTodoViewController: UIViewController, UITextFieldDelegate {
             alertView.addAction(UIAlertAction(title: "はい", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alertView, animated: true, completion: nil)
         } else {
+            let todo = Todo()
             todo.title = todoField.text
             todo.descript = descriptionView.text
             todo.priority = TodoProirity(rawValue: prioritySegment.selectedSegmentIndex)!
