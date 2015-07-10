@@ -18,14 +18,13 @@ class TodoCollection: NSObject {
     }
     
     func save (){
-        var todoLists: Array<Dictionary<String, AnyObject>> = []
+        var todoList: Array<Dictionary<String, AnyObject>> = []
         for todo in todos {
             let todoDic = TodoCollection.convertDictionary(todo)
-            todoLists.append(todoDic)
+            todoList.append(todoDic)
         }
-        println(todoLists)
         let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(todoLists, forKey: "todoLists")
+        defaults.setObject(todoList, forKey: "todoLists")
     }
     
     class func convertDictionary(todo: Todo) -> Dictionary<String, AnyObject> {
