@@ -50,11 +50,14 @@ class TodoListTableViewController: UITableViewController {
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
-
+        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "reuseIdentifier")
         let todo = self.todoCollection.todos[indexPath.row]
         cell.textLabel?.text = todo.title
-        
+        cell.detailTextLabel?.text = todo.descript
+        let priorityIcon = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: 12))
+        priorityIcon.layer.cornerRadius = 6
+        priorityIcon.backgroundColor = todo.priority.color()
+        cell.accessoryView = priorityIcon
         return cell
     }
     
