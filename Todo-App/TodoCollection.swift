@@ -25,6 +25,18 @@ class TodoCollection: NSObject {
         }
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(todoList, forKey: "todoLists")
+        defaults.synchronize()
+    }
+    
+    func fetchTodos() {
+        var todos:[Todo] = []
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let todoList = defaults.objectForKey("todoLists") as? Array<Dictionary<String, AnyObject>> {
+            for todoDic in todoList {
+                let todo = TodoCollection.convertTodoModel(todoDic)
+                self.todos.append(todo)
+            }
+        }
     }
     
     class func convertDictionary(todo: Todo) -> Dictionary<String, AnyObject> {
@@ -35,4 +47,11 @@ class TodoCollection: NSObject {
         return dic
     }
     
+    class func convertTodoModel(attributes: Dictionary<String, AnyObject>) -> Todo {
+        let todo = Todo()
+        todo.title = attributes["title"] as! String
+        todo.descript = attributes["descript"] as! String
+        todo.priority = TodoProirity(rawValue: attributes["priority"] as! Int)!
+        return todo
+    }
 }
