@@ -9,8 +9,10 @@
 import UIKit
 
 class NewTodoViewController: UIViewController, UITextFieldDelegate {
-    @IBOutlet weak var todoField: UITextField!
+    @IBOutlet weak var prioritySegment: UISegmentedControl!
     @IBOutlet weak var descriptionView: UITextView!
+    @IBOutlet weak var todoField: UITextField!
+    let todoColleciton = TodoCollection.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +24,7 @@ class NewTodoViewController: UIViewController, UITextFieldDelegate {
         todoField.delegate = self
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -32,11 +34,26 @@ class NewTodoViewController: UIViewController, UITextFieldDelegate {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.tintColor = UIColor.blackColor()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "閉じる", style: UIBarButtonItemStyle.Plain, target: self, action: "close")
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "保存", style: UIBarButtonItemStyle.Plain, target: self, action: "save")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "保存", style: UIBarButtonItemStyle.Plain, target: self, action: "save")
     }
     
     func close(){
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func save(){
+        if count(todoField.text) == 0{
+            let alertView = UIAlertController(title: "エラー", message: "Todoが記述されていません", preferredStyle: UIAlertControllerStyle.Alert)
+            alertView.addAction(UIAlertAction(title: "はい", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alertView, animated: true, completion: nil)
+        } else {
+            let todo = Todo()
+            todo.title = todoField.text
+            todo.descript = descriptionView.text
+            todo.priority = TodoProirity(rawValue: prioritySegment.selectedSegmentIndex)!
+            self.todoColleciton.addTodoCollection(todo)
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
     func tapGesture(sender: AnyObject){
@@ -48,15 +65,15 @@ class NewTodoViewController: UIViewController, UITextFieldDelegate {
         todoField.resignFirstResponder()
         return true
     }
-
+    
     /*
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
     }
     */
-
+    
 }

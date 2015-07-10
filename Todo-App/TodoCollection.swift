@@ -9,13 +9,30 @@
 import UIKit
 
 class TodoCollection: NSObject {
+    static let sharedInstance = TodoCollection()
     var todos:[Todo] = []
     
-    func fetchTodos() {
-        for (var i = 0; i < 7; i++) {
-            let todo = Todo()
-            todo.title = "Todo\(i + 1)"
-            self.todos.append(todo)
-        }
+    func addTodoCollection(todo: Todo){
+        self.todos.append(todo)
+        self.save()
     }
+    
+    func save (){
+        var todoList: Array<Dictionary<String, AnyObject>> = []
+        for todo in todos {
+            let todoDic = TodoCollection.convertDictionary(todo)
+            todoList.append(todoDic)
+        }
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(todoList, forKey: "todoLists")
+    }
+    
+    class func convertDictionary(todo: Todo) -> Dictionary<String, AnyObject> {
+        var dic = Dictionary<String, AnyObject>()
+        dic["title"] = todo.title
+        dic["descript"] = todo.descript
+        dic["priority"] = todo.priority.rawValue
+        return dic
+    }
+    
 }
