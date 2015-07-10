@@ -12,7 +12,7 @@ class NewTodoViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var prioritySegment: UISegmentedControl!
     @IBOutlet weak var descriptionView: UITextView!
     @IBOutlet weak var todoField: UITextField!
-    var todoColleciton = TodoCollection.sharedInstance
+    let todoColleciton = TodoCollection.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
