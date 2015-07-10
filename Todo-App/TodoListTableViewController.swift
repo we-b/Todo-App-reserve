@@ -25,6 +25,7 @@ class TodoListTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.tintColor = UIColor.blackColor()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "新規作成", style: UIBarButtonItemStyle.Plain, target: self, action: "newTodo")
+        self.navigationItem.leftBarButtonItem = editButtonItem()
         self.tableView.reloadData()
     }
 
@@ -56,6 +57,25 @@ class TodoListTableViewController: UITableViewController {
         
         return cell
     }
+    
+    override func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+        let todo = todoCollection.todos[sourceIndexPath.row]
+        todoCollection.todos.removeAtIndex(sourceIndexPath.row)
+        todoCollection.todos.insert(todo, atIndex: destinationIndexPath.row)
+        todoCollection.save()
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        switch editingStyle {
+        case .Delete:
+            todoCollection.todos.removeAtIndex(indexPath.row)
+            todoCollection.save()
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Middle)
+        default:
+            return
+        }
+    }
+        
     
     func newTodo(){
         self.performSegueWithIdentifier("PresentNewTodoViewController", sender: self)
