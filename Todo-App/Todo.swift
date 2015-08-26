@@ -41,8 +41,15 @@ class Todo: NSObject {
         self.descript = attributes["descript"] as! String
         self.priority = TodoProirity(rawValue: attributes["priority"] as! Int)!
     }
+
+//    convenience init(attributes: Dictionary<String, AnyObject>) {
+//        self.init()
+//        self.title = attributes["title"] as! String
+//        self.descript = attributes["descript"] as! String
+//        self.priority = TodoProirity(rawValue: attributes["priority"] as! Int)!
+//    }
     
-    func convertDictionary() -> Dictionary<String, AnyObject> {
+    func toDictionary() -> Dictionary<String, AnyObject> {
         var dic = Dictionary<String, AnyObject>()
         dic["title"] = self.title
         dic["descript"] = self.descript
